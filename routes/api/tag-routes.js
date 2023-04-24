@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findAll({
-      include: [{ model: Product }],
+      include: [{ model: Product, through: ProductTag, as: 'tag_products' }],
     });
 
     res.status(200).json(tagData);
@@ -59,7 +59,7 @@ router.put('/:id', (req, res) => {
     {
       // Gets a book based on the book_id given in the request parameters
       where: {
-        tag_id: req.params.id,
+        id: req.params.id,
       },
     }
   )
